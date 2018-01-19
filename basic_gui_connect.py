@@ -1,5 +1,6 @@
 # standard libraries
 import glob
+import time
 import tkinter as tk
 
 # installed libraries
@@ -23,13 +24,16 @@ class usb_comm():
         #         pass
         #
         # print(devices)
-        self.device = serial.Serial(port='COM4', write_timeout=0.1,
-                                    inter_byte_timeout=1, baudrate=115200,
+        self.device = serial.Serial(port='COM4', write_timeout=0.1, timeout=1.0,
+                                    inter_byte_timeout=1, baudrate=114286, bytesize=8,
                                     parity=serial.PARITY_EVEN, stopbits=1)
 
     def write_I(self):
-        self.device.write(b'I-')
+        self.device.write(b'ID')
         message = self.device.read_all()
+        # message = self.device.readline()
+        # while not message:
+        #     message = self.device.readline()
         print(message)
 
 
